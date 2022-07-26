@@ -97,8 +97,10 @@ public class SimpleHelper {
         if (func==null || func.length()==0) throw new NullPointerException(); //TODO: message
         this.func = func;
         if (args!=null && args.size()>0) {
-            this.args = (String[]) args.toArray(new String[0]);
+            this.args = args.toArray(new String[0]);
             for (int i=0; i<this.args.length; i++) { this.args[i] = this.args[i].toUpperCase(); }
+        } else {
+            this.args = new String[0];
         }
     }
 
