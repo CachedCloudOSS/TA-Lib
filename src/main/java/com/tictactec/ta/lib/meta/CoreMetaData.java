@@ -116,9 +116,9 @@ public class CoreMetaData implements Comparable<CoreMetaData> {
     private static transient Map<String, CoreMetaData> taFuncMap = null;
     private static transient Map<String, Set<CoreMetaData> > taGrpMap = null;
 
-    private transient Object callInputParams[] = null;
-    private transient Object callOutputParams[] = null;
-    private transient Object callOptInputParams[] = null;
+    private transient Object[] callInputParams = new Object[0];
+    private transient Object[] callOutputParams = new Object[0];
+    private transient Object[] callOptInputParams = new Object[0];
     
     
     protected CoreMetaData() {
@@ -213,9 +213,9 @@ public class CoreMetaData implements Comparable<CoreMetaData> {
     static CoreMetaData getFuncHandle(final String name) throws NoSuchMethodException {
         CoreMetaData mi = getAllFuncs().get(name.toUpperCase());
         if (mi == null) throw new NoSuchMethodException(name.toUpperCase());
-        mi.callInputParams = null;
-        mi.callOutputParams = null;
-        mi.callOptInputParams = null;
+        mi.callInputParams = new Object[mi.getFuncInfo().nbInput()];
+        mi.callOutputParams = new Object[mi.getFuncInfo().nbOutput()];
+        mi.callOptInputParams = new Object[mi.getFuncInfo().nbOptInput()];
         if (mi != null) return mi;
         throw new NoSuchMethodException("Function " + name);
     }
@@ -558,7 +558,7 @@ public class CoreMetaData implements Comparable<CoreMetaData> {
         InputParameterInfo param = getInputParameterInfo(paramIndex);
         if ((param==null) || (param.type()!=InputParameterType.TA_Input_Price)) throw new InternalError(CONTACT_DEVELOPERS);
         if (! (array instanceof PriceInputParameter) ) throw new IllegalArgumentException(PRICE_EXPECTED);
-        if (callInputParams==null) callInputParams = new Object[getFuncInfo().nbInput()];
+        if (callInputParams==null || callInputParams.length == 0) callInputParams = new Object[getFuncInfo().nbInput()];
         callInputParams[paramIndex] = array;
     }
 

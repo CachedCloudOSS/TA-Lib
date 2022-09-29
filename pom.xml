@@ -4,7 +4,7 @@
 
     <groupId>com.tictactec</groupId>
     <artifactId>ta-lib</artifactId>
-    <version>0.4.1</version>
+    <version>0.4.6</version>
     <packaging>jar</packaging>
 
     <name>TA-Lib</name>
